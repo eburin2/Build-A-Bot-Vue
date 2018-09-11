@@ -1,6 +1,11 @@
 <template>
   <div class="part" :class="position">
+  <router-link :to="{
+      name: 'Parts',
+      params: { id: this.selectedPart.id, partType: this.selectedPart.type },
+    }">
     <img :src="selectedPart.src" title="arm"/>
+  </router-link>
     <button @click="selectPreviousPart()" class="prev-selector"></button>
     <button @click="selectNextPart()" class="next-selector"></button>
     <span class="sale" v-show="selectedPart.onSale">Sale!</span>
@@ -47,6 +52,15 @@ export default {
     this.emitSelectedPart();
   },
   methods: {
+    showPartInfo() {
+      this.$router.push({
+        name: 'Parts',
+        params: {
+          id: this.selectedPart.id,
+          partType: this.selectedPart.type,
+        },
+      });
+    },
     emitSelectedPart() {
       this.$emit('partSelected', this.selectedPart);
     },
@@ -70,9 +84,8 @@ export default {
 <style scoped>
 .part {
   position: relative;
-  width:165px;
-  height:165px;
-  border: 3px solid #aaa;
+  width: 165px;
+  border: 2px solid #aaa;
 }
 .sale {
   position: absolute;
@@ -93,6 +106,7 @@ export default {
 }
 .part img {
   width:165px;
+  cursor: pointer;
 }
 .top {
   border-bottom: none;
@@ -114,7 +128,7 @@ export default {
 }
 .prev-selector {
   position: absolute;
-  z-index:1;
+  z-index: 1;
   top: -3px;
   left: -28px;
   width: 25px;
@@ -122,7 +136,7 @@ export default {
 }
 .next-selector {
   position: absolute;
-  z-index:1;
+  z-index: 1;
   top: -3px;
   right: -28px;
   width: 25px;
@@ -158,8 +172,8 @@ export default {
 }
 .right .prev-selector {
   top: -28px;
-  left: 24px;
-  width: 144px;
+  left: 26px;
+  width: 142px;
   height: 25px;
 }
 .right .next-selector {
@@ -170,6 +184,6 @@ export default {
   height: 25px;
 }
 .highlight {
-  border: 1px solid red;
+  border: 2px solid red;
 }
 </style>
